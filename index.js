@@ -193,12 +193,8 @@ async function run() {
         res.status(500).send({ message: "Server error" });
       }
     });
- 
-    
-
-    
     //------------------admin-------------
-    app.get("/users/search", async (req, res) => {
+    app.get("/users/search", verifyAdmin, async (req, res) => {
       const emailQuery = req.query.email;
       if (!emailQuery) {
         return res.status(400).send({ message: "Missing email query" });
@@ -257,7 +253,7 @@ async function run() {
       });
       res.send(user || { error: "Not found", searchedEmail: email });
     });
-    // Get all users (admin only)
+    // Get all users (admin only)-done
     app.get(
       "/admin/users",
       verifyFirebaseToken,
@@ -272,7 +268,7 @@ async function run() {
         }
       }
     );
-    // Update user role (admin only)
+    // Update user role (admin only)-done
     app.patch(
       "/admin/users/:id/role",
       verifyFirebaseToken,
@@ -432,7 +428,7 @@ async function run() {
       }
     });
     // Get all pending donations (admin only)
-    app.get("/admin/pending-donations", async (req, res) => {
+    app.get("/admin/pending-donations",verifyFirebaseToken, verifyAdmin, async (req, res) => {
       try {
         const donations = await donationCollection
           .find({ status: "Pending" })
@@ -445,7 +441,7 @@ async function run() {
     });
 
     // Update donation status (admin only)
-    app.patch("/admin/donations/:id/status", async (req, res) => {
+    app.patch("/admin/donations/:id/status", verifyAdmin, async (req, res) => {
       try {
         const id = req.params.id;
         const { status } = req.body;
