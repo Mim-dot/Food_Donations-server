@@ -535,7 +535,7 @@ async function run() {
     );
 
     //-------------------All Donation-------------------
-    app.get("/all/donations", async (req, res) => {
+    app.get("/all/donations",verifyFirebaseToken,verifyRestaurant, async (req, res) => {
       const result = await donationCollection.find().toArray();
       res.send(result);
     });
@@ -1202,7 +1202,7 @@ async function run() {
       }
     });
     //mypickup
-    app.patch("/pickup/donation-requests/:id", async (req, res) => {
+    app.patch("/pickup/donation-requests/:id",verifyFirebaseToken,verifyCharity, async (req, res) => {
       const id = req.params.id;
       const { status } = req.body;
 
