@@ -326,7 +326,7 @@ async function run() {
       }
     });
     // Get all pending charity requests (admin only)
-    app.get("/admin/charity-requests", async (req, res) => {
+    app.get("/admin/charity-requests",verifyFirebaseToken,verifyAdmin, async (req, res) => {
       try {
         const requests = await charityCollection
           .aggregate([
@@ -377,7 +377,7 @@ async function run() {
       }
     });
     // Add this to your backend routes
-    app.patch("/admin/charity-requests/:id", async (req, res) => {
+    app.patch("/admin/charity-requests/:id",verifyAdmin, async (req, res) => {
       try {
         const id = req.params.id;
         const { status } = req.body;
@@ -1336,7 +1336,7 @@ async function run() {
       }
     });
     ///------admin-managerequest---
-    app.get("/api/charity-requests", async (req, res) => {
+    app.get("/api/charity-requests",verifyFirebaseToken,verifyAdmin, async (req, res) => {
       try {
         const requests = await donationRequestsCollection.find({}).toArray();
         res.json(requests);
