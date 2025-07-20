@@ -716,7 +716,7 @@ async function run() {
         });
 
         if (existing) {
-          return res.status(400).send({ message: "Request already exists." });
+          return res.status(400).send({ message: "Request already exists 😥" });
         }
 
         const result = await charityCollection.insertOne({
