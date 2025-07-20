@@ -1175,7 +1175,7 @@ async function run() {
       }
     });
 
-    app.patch("/api/donation-requests/:id", async (req, res) => {
+    app.patch("/api/donation-requests/:id",verifyRestaurant, async (req, res) => {
       const requestId = req.params.id;
       const { action, donationId } = req.body;
 
