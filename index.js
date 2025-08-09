@@ -1174,6 +1174,27 @@ async function run() {
         res.status(500).json({ message: "Internal server error" });
       }
     });
+   app.get("/api/donation-requests/:id", async (req, res) => {
+  const { id } = req.params;
+
+  if (!ObjectId.isValid(id)) {
+    return res.status(400).json({ message: "Invalid request ID" });
+  }
+
+  try {
+    const request = await donationRequestsCollection.findOne({
+      _id: new ObjectId(id),
+    });
+
+    if (!request) {
+      return res.status(404).json({ message: "Donation request not found" });
+    }
+
+    res.json(request);
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
 
     app.patch("/api/donation-requests/:id",verifyRestaurant, async (req, res) => {
       const requestId = req.params.id;
