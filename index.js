@@ -58,40 +58,7 @@ async function run() {
       .collection("donationRequests");
 
     //-------------verify--------------
-    //     const verifyFirebaseToken = async (req, res, next) => {
-    //       const authHeader = req.headers.authorization;
-    // console.log("Authorization header:", req.headers.authorization);
 
-    //       if (!authHeader?.startsWith("Bearer ")) {
-    //         return res
-    //           .status(401)
-    //           .json({ error: "Unauthorized - No token provided" });
-    //       }
-
-    //       const idToken = authHeader.split(" ")[1];
-
-    //       try {
-    //         const decodedToken = await admin.auth().verifyIdToken(idToken);
-    //         // Find the user in MongoDB by email
-    //         const userRecord = await usersCollection.findOne({
-    //           email: decodedToken.email,
-    //         });
-
-    //         if (!userRecord) {
-    //           return res.status(404).json({ error: "User not found in DB" });
-    //         }
-    //         req.user = {
-    //           uid: decodedToken.uid,
-    //           email: decodedToken.email,
-    //           role: userRecord.role || "user", // use role from DB
-    //         };
-    //         // console.log("Verified user:", req.user);
-    //         next();
-    //       } catch (error) {
-    //         console.error("Firebase token verification error:", error);
-    //         res.status(403).json({ error: "Invalid or expired token" });
-    //       }
-    //     };
     const verifyFirebaseToken = async (req, res, next) => {
       try {
         const authHeader = req.headers.authorization;
